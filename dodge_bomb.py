@@ -23,6 +23,7 @@ def main():
     kk_rct.center = 900, 400
     clock = pg.time.Clock()
     tmr = 0
+    # 爆弾の設定
     bd_img = pg.Surface((20, 20))
     bd_img.set_colorkey((0, 0, 0))
     bd_rct = bd_img.get_rect()
@@ -42,9 +43,10 @@ def main():
                 sum_mv[0] += v[0]
                 sum_mv[1] += v[1]
         kk_rct.move_ip(sum_mv)
-        bd_rct.move_ip(vx, vy)
         screen.blit(kk_img, kk_rct)
+        # 爆弾の追加と移動
         screen.blit(bd_img, bd_rct)
+        bd_rct.move_ip(vx, vy)
         pg.display.update()
         tmr += 1
         clock.tick(50)
