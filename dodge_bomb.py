@@ -28,6 +28,27 @@ def check_bound(obj_rct:pg.Rect):
     return yoko, tate
 
 
+def gameover():
+    """
+    ゲームオーバーになったときの関数
+    引数なし
+    戻り値 : ゲームオーバーのときの画面全体を表す go_sc
+    """
+    go_sc = pg.display.set_mode((WIDTH, HEIGHT))
+    go_bg = pg.Surface((WIDTH, HEIGHT))
+    pg.draw.rect(go_bg, (0, 0, 0), (0, 0, WIDTH, HEIGHT))
+    pg.Surface.set_alpha(go_bg, 50)
+    go_sc.blit(go_bg, [0, 0])
+    fo = pg.font.Font(None, 80)
+    txt = fo.render("Game Over", True, (255, 255, 255))
+    go_sc.blit(txt, [700, 350])
+    img = pg.image.load("fig/8.png")
+    kk_cry = pg.transform.rotozoom(img, 0, 2.0)
+    go_sc.blit(kk_cry, [800, 600])
+    pg.display.update()
+    return go_sc
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -49,7 +70,8 @@ def main():
             if event.type == pg.QUIT: 
                 return
         if kk_rct.colliderect(bd_rct):  # こうかとんと爆弾がぶつかったら
-            print("Game Over")
+            screen.blit(gameover(), [0, 0])
+            clock.tick(0.2)  # 5秒の遅延
             return
         screen.blit(bg_img, [0, 0]) 
 
